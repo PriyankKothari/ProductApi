@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34723.18
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.WebApi", "Product.WebApi\Product.WebApi.csproj", "{6E7D3854-16CF-46DB-98BA-073FDA12A30B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductApi.WebApi", "Product.WebApi\ProductApi.WebApi.csproj", "{6E7D3854-16CF-46DB-98BA-073FDA12A30B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Domain", "Product.Domain\Product.Domain.csproj", "{2BD5EBFD-7651-468A-AEDE-3A1471DB6E23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductApi.Domain", "Product.Domain\ProductApi.Domain.csproj", "{2BD5EBFD-7651-468A-AEDE-3A1471DB6E23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Application", "Product.Application\Product.Application.csproj", "{38A49510-36F5-4526-8F46-789EF65939AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductApi.Application", "Product.Application\ProductApi.Application.csproj", "{38A49510-36F5-4526-8F46-789EF65939AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Persistence", "Product.Persistence\Product.Persistence.csproj", "{EB429DD5-A7A3-4076-8450-79CBF979E5A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductApi.Persistence", "Product.Persistence\ProductApi.Persistence.csproj", "{EB429DD5-A7A3-4076-8450-79CBF979E5A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Tests", "Product.Tests\Product.Tests.csproj", "{56FB9A86-97A2-4D05-AAA4-E3E087AD158A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductApi.Tests", "Product.Tests\ProductApi.Tests.csproj", "{56FB9A86-97A2-4D05-AAA4-E3E087AD158A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
