@@ -1,9 +1,9 @@
-﻿namespace ProductApi.Application.DTOs
+﻿namespace ProductApi.WebApi.ViewModels
 {
     /// <summary>
-    /// Represents product data transfer object.
+    /// Represents product response view model.
     /// </summary>
-    public sealed class ProductDto
+    public sealed class ProductResponse
     {
         /// <summary>
         /// Gets or sets Id.
@@ -16,7 +16,7 @@
         public string Name { get; set; } = string.Empty;
 
         /// <summary>
-        /// Gets or sets Brand Name.
+        /// Gets or sets BrandName.
         /// </summary>
         public string BrandName { get; set; } = string.Empty;
 

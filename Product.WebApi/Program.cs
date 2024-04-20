@@ -1,25 +1,70 @@
-var builder = WebApplication.CreateBuilder(args);
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using ProductApi.WebApi.Validators;
+using ProductApi.WebApi.ViewModels;
 
-// Add services to the container.
+var webApplicationBuilder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Build Service
+// Logging
+webApplicationBuilder.Host.ConfigureLogging(logging => logging.AddConfiguration(webApplicationBuilder.Configuration.GetSection("Logging")));
 
-var app = builder.Build();
+// Add CORS
+webApplicationBuilder.Services.AddCors(policy =>
+{
+    policy.AddPolicy("CorsPolicy", options =>
+    {
+        options
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+// Controllers
+webApplicationBuilder.Services.AddControllers();
+
+// Fluent Validation
+webApplicationBuilder.Services.AddFluentValidationAutoValidation();
+
+// API Explorer
+webApplicationBuilder.Services.AddEndpointsApiExplorer();
+webApplicationBuilder.Services.AddSwaggerGen();
+
+// API Versioning
+webApplicationBuilder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ApiVersionReader = ApiVersionReader.Combine(new UrlSegmentApiVersionReader(), new HeaderApiVersionReader("x-api-version"));
+});
+
+webApplicationBuilder.Services.AddVersionedApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+// Services
+webApplicationBuilder.Services.AddScoped<IValidator<ProductRequest>, ProductRequestValidator>();
+
+
+// Build Web Application
+var webApplication = webApplicationBuilder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (webApplication.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    webApplication.UseSwagger();
+    webApplication.UseSwaggerUI();
 }
+webApplication.UseHttpsRedirection();
+webApplication.UseCors("CorsPolicy");
 
-app.UseHttpsRedirection();
+webApplication.MapControllerRoute("Default",
+    "{controller}/{action}/{type}",
+    new { controller = "Home", action = "Index" });
 
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
+webApplication.Run();

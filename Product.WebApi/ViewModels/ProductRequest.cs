@@ -1,15 +1,10 @@
-﻿namespace ProductApi.Application.DTOs
+﻿namespace ProductApi.WebApi.ViewModels
 {
     /// <summary>
-    /// Represents product data transfer object.
+    /// Represents product request view model.
     /// </summary>
-    public sealed class ProductDto
+    public sealed class ProductRequest
     {
-        /// <summary>
-        /// Gets or sets Id.
-        /// </summary>
-        public int Id { get; set; }
-
         /// <summary>
         /// Gets or sets Name.
         /// </summary>

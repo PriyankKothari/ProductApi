@@ -20,6 +20,7 @@ namespace ProductApi.Application.Services
         /// </summary>
         /// <param name="productRepository"><see cref="IProductRepository" />.</param>
         /// <param name="logger"><see cref="ILogger{IProductService}" />.</param>
+        /// <param name="mapper"><see cref="IMapper" />.</param>
         public ProductService(IProductRepository productRepository, ILogger<IProductService> logger, IMapper mapper)
         {
             this._productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
