@@ -9,20 +9,12 @@ namespace ProductApi.Domain.Repositories
     public interface IProductRepository
     {
         /// <summary>
-        /// Checks if a <see cref="Product" /> exists that matches the predicate expression.
-        /// </summary>
-        /// <param name="predicateExpression"><see cref="Expression{TDelegate}" />.</param>
-        /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see langword="true" /> or <see langword="false" />.</returns>
-        Task<bool> ExistsAsync(Expression<Func<Product, bool>> predicateExpression, CancellationToken cancellationToken);
-
-        /// <summary>
         /// Gets a <see cref="List{Product}" /> that matches the predicate expression.
         /// </summary>
         /// <param name="predicateExpression"><see cref="Expression{TDelegate}" />.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
         /// <returns><see cref="List{Product}" />.</returns>
-        Task<List<Product>> ListAsync(Expression<Func<Product, bool>>? predicateExpression, CancellationToken cancellationToken);
+        Task<IEnumerable<Product>> ListAsync(Expression<Func<Product, bool>>? predicateExpression, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a <see cref="Product" /> that matches the predicate expression.

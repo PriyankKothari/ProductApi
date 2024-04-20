@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
+using ProductApi.Application.DTOs;
 using ProductApi.Domain.Entities;
 using ProductApi.Domain.Repositories;
-using System.Linq.Expressions;
 
 namespace ProductApi.Application.Services
 {
@@ -12,43 +13,28 @@ namespace ProductApi.Application.Services
     {
         private readonly IProductRepository _productRepository;
         private readonly ILogger<IProductService> _logger;
+        private readonly IMapper _mapper;
 
         /// <summary>
         /// Initiates a new instance of <see cref="IProductService" />.
         /// </summary>
-        /// <param name="productRepository"></param>
-        public ProductService(IProductRepository productRepository, ILogger<IProductService> logger)
+        /// <param name="productRepository"><see cref="IProductRepository" />.</param>
+        /// <param name="logger"><see cref="ILogger{IProductService}" />.</param>
+        public ProductService(IProductRepository productRepository, ILogger<IProductService> logger, IMapper mapper)
         {
             this._productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
             this._logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this._mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<bool> ProductExistsAsync(Expression<Func<Product, bool>> predicateExpression, CancellationToken cancellationToken)
-        {
-            ArgumentNullException.ThrowIfNull(predicateExpression, nameof(predicateExpression));
-
-            try
-            {
-                return await this._productRepository.ExistsAsync(predicateExpression, cancellationToken);
-            }
-            catch(Exception exception)
-            {
-                this._logger.LogError(exception.Message, exception);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// <inheritdoc />
-        /// </summary>
-        public async Task<List<Product>> ListProductsAsync(CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProductDto>> ListProductsAsync(CancellationToken cancellationToken)
         {
             try
             {
-                return await this._productRepository.ListAsync(null, cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<IEnumerable<ProductDto>>(await this._productRepository.ListAsync(null, cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
@@ -60,14 +46,15 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<List<Product>> ListProductsByBrandNameAsync(string brandName, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ProductDto>> ListProductsByBrandNameAsync(string brandName, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(brandName))
                 throw new ArgumentNullException(nameof(brandName));
 
             try
             {
-                return await this._productRepository.ListAsync(pr => pr.Brand.Name.Equals(brandName, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<IEnumerable<ProductDto>>(
+                    await this._productRepository.ListAsync(pr => pr.Brand.Name.Equals(brandName, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false));
             }
             catch(Exception exception)
             {
@@ -79,13 +66,13 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<Product?> GetProductByIdAsync(int id, CancellationToken cancellationToken)
+        public async Task<ProductDto?> GetProductByIdAsync(int id, CancellationToken cancellationToken)
         {
             ArgumentNullException.ThrowIfNull(id, nameof(id));
 
             try
             {
-                return await this._productRepository.GetAsync(pr => pr.Id.Equals(id), cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<ProductDto>(await this._productRepository.GetAsync(pr => pr.Id.Equals(id), cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
@@ -97,14 +84,15 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<Product?> GetProductByNameAsync(string name, CancellationToken cancellationToken)
+        public async Task<ProductDto?> GetProductByNameAsync(string name, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
 
             try
             {
-                return await this._productRepository.GetAsync(pr => pr.Name.Equals(name, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<ProductDto>(
+                    await this._productRepository.GetAsync(pr => pr.Name.Equals(name, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
@@ -116,7 +104,7 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<Product?> GetProductByNameAndBrandAsync(string name, string brandName, CancellationToken cancellationToken)
+        public async Task<ProductDto?> GetProductByNameAndBrandAsync(string name, string brandName, CancellationToken cancellationToken)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentNullException(nameof(name));
@@ -126,7 +114,8 @@ namespace ProductApi.Application.Services
 
             try
             {
-                return await this._productRepository.GetAsync(pr => pr.Name.Contains(name) && pr.Brand.Name.Contains(brandName), cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<ProductDto>(
+                    await this._productRepository.GetAsync(pr => pr.Name.Contains(name) && pr.Brand.Name.Contains(brandName), cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
@@ -138,13 +127,13 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<Product> CreateProductAsync(Product product, CancellationToken cancellationToken)
+        public async Task<ProductDto> CreateProductAsync(ProductDto productRequest, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(product, nameof(product));
+            ArgumentNullException.ThrowIfNull(productRequest, nameof(productRequest));
 
             try
             {
-                return await this._productRepository.CreateAsync(product, cancellationToken).ConfigureAwait(false);
+                return this._mapper.Map<ProductDto>(await this._productRepository.CreateAsync(this._mapper.Map<Product>(productRequest), cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
@@ -156,13 +145,13 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<Product> UpdateProductAsync(Product product, CancellationToken cancellationToken)
+        public async Task<ProductDto> UpdateProductAsync(ProductDto productRequest, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(product, nameof(product));
+            ArgumentNullException.ThrowIfNull(productRequest, nameof(productRequest));
 
             try
             {
-                return await this._productRepository.UpdateAsync(product, cancellationToken);
+                return this._mapper.Map<ProductDto>(await this._productRepository.UpdateAsync(this._mapper.Map<Product>(productRequest), cancellationToken));
             }
             catch (Exception exception)
             {
@@ -174,13 +163,13 @@ namespace ProductApi.Application.Services
         /// <summary>
         /// <inheritdoc />
         /// </summary>
-        public async Task<bool> DeleteProductAsync(Product product, CancellationToken cancellationToken)
+        public async Task<bool> DeleteProductAsync(ProductDto productRequest, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(product, nameof(product));
+            ArgumentNullException.ThrowIfNull(productRequest, nameof(productRequest));
 
             try
             {
-                return await this._productRepository.DeleteAsync(product, cancellationToken);
+                return await this._productRepository.DeleteAsync(this._mapper.Map<Product>(productRequest), cancellationToken);
             }
             catch(Exception exception)
             {

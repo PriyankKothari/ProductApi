@@ -14,10 +14,5 @@
         /// Gets or sets Name.
         /// </summary>
         public string Name { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Gets or sets Description.
-        /// </summary>
-        public string Description { get; set; } = string.Empty;
     }
 }

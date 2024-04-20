@@ -1,83 +1,74 @@
-﻿using ProductApi.Domain.Entities;
-using System.Linq.Expressions;
+﻿using ProductApi.Application.DTOs;
 
 namespace ProductApi.Application.Services
 {
     /// <summary>
-    /// Represents service for <see cref="Product" />.
+    /// Represents service for products.
     /// </summary>
     public interface IProductService
     {
         /// <summary>
-        /// Checks if a <see cref="Product" /> exists that matches the predicate expression.
-        /// </summary>
-        /// <param name="predicateExpression"><see cref="Expression{TDelegate}" />.</param>
-        /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see langword="true" /> or <see langword="false" />.</returns>
-        Task<bool> ProductExistsAsync(Expression<Func<Product, bool>> predicateExpression, CancellationToken cancellationToken);
-
-        /// <summary>
-        /// Gets a <see cref="List{Product}" />.
+        /// Gets a list of products.
         /// </summary>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see cref="List{Product}" />.</returns>
-        Task<List<Product>> ListProductsAsync(CancellationToken cancellationToken);
+        /// <returns><see cref="List{T}" />.</returns>
+        Task<IEnumerable<ProductDto>> ListProductsAsync(CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a <see cref="List{Product}" /> that matches the brand name.
+        /// Gets a product by brand name.
         /// </summary>
         /// <param name="brandName">Brand name of a product.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see cref="List{Product}" />.</returns>
-        Task<List<Product>> ListProductsByBrandNameAsync(string brandName, CancellationToken cancellationToken);
+        /// <returns><see cref="List{T}" />.</returns>
+        Task<IEnumerable<ProductDto>> ListProductsByBrandNameAsync(string brandName, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a <see cref="Product" /> by product id.
+        /// Gets a product by id.
         /// </summary>
         /// <param name="id">Id of the product.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see cref="Product" />.</returns>
-        Task<Product?> GetProductByIdAsync(int id, CancellationToken cancellationToken);
+        /// <returns><see cref="ProductDto" />.</returns>
+        Task<ProductDto?> GetProductByIdAsync(int id, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a <see cref="Product" /> by product name.
+        /// Gets a product by name.
         /// </summary>
         /// <param name="name">Name of the product.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see cref="Product" />.</returns>
-        Task<Product?> GetProductByNameAsync(string name, CancellationToken cancellationToken);
+        /// <returns><see cref="ProductDto" />.</returns>
+        Task<ProductDto?> GetProductByNameAsync(string name, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Gets a <see cref="Product" /> by product name and brand name.
+        /// Gets a product by product name and brand name.
         /// </summary>
         /// <param name="name">Name of the product.</param>
         /// <param name="brandName">Name of the product brand.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns><see cref="Product" />.</returns>
-        Task<Product?> GetProductByNameAndBrandAsync(string name, string brandName, CancellationToken cancellationToken);
+        /// <returns><see cref="ProductDto" />.</returns>
+        Task<ProductDto?> GetProductByNameAndBrandAsync(string name, string brandName, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Creates a <see cref="Product" />.
+        /// Creates a product.
         /// </summary>
-        /// <param name="product"><see cref="Product" />.</param>
+        /// <param name="productRequest"><see cref="ProductDto" />.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns>A new <see cref="Product" />.</returns>
-        Task<Product> CreateProductAsync(Product product, CancellationToken cancellationToken);
+        /// <returns><see cref="ProductDto" />.</returns>
+        Task<ProductDto> CreateProductAsync(ProductDto productRequest, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Updates a <see cref="Product" />.
+        /// Updates a product.
         /// </summary>
-        /// <param name="product"><see cref="Product" />.</param>
+        /// <param name="productRequest"><see cref="ProductDto" />.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
-        /// <returns>An updated <see cref="Product" />.</returns>
-        Task<Product> UpdateProductAsync(Product product, CancellationToken cancellationToken);
+        /// <returns><see cref="ProductDto" />.</returns>
+        Task<ProductDto> UpdateProductAsync(ProductDto productRequest, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Deletes a <see cref="Product" />.
+        /// Deletes a product.
         /// </summary>
-        /// <param name="product"><see cref="Product" />.</param>
+        /// <param name="productRequest"><see cref="ProductDto" />.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
         /// <returns><see langword="true" /> or <see langword="false" />.</returns>
-        Task<bool> DeleteProductAsync(Product product, CancellationToken cancellationToken);
+        Task<bool> DeleteProductAsync(ProductDto productRequest, CancellationToken cancellationToken);
     }
 }
