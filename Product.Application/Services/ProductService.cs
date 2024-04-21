@@ -69,7 +69,7 @@ namespace ProductApi.Application.Services
         /// </summary>
         public async Task<ProductDto?> GetProductByIdAsync(int id, CancellationToken cancellationToken)
         {
-            ArgumentNullException.ThrowIfNull(id, nameof(id));
+            if (id == default) throw new ArgumentNullException(nameof(id));
 
             try
             {

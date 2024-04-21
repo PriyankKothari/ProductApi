@@ -25,7 +25,7 @@ namespace ProductApi.Tests.Controllers
         {
             this._productService = new();
             this._mapper = new();
-            this._logger = new Mock<ILogger<ProductsController>>();
+            this._logger = new();
         }
 
         [TestMethod]
@@ -62,7 +62,7 @@ namespace ProductApi.Tests.Controllers
         }
 
         [TestMethod]
-        public async Task Get_Should_ReturnJsonResult_WithOkHttpStatusCode()
+        public async Task Get_ShouldReturnJsonResult_WithOkHttpStatusCode()
         {
             // Arrange
             this._productService
