@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Helpers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Product.Application\ProductApi.Application.csproj" />
     <ProjectReference Include="..\Product.Domain\ProductApi.Domain.csproj" />
     <ProjectReference Include="..\Product.Persistence\ProductApi.Persistence.csproj" />

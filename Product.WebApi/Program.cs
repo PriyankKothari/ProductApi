@@ -88,24 +88,26 @@ if (webApplication.Environment.IsDevelopment())
 {
     webApplication.UseSwagger();
     webApplication.UseSwaggerUI();
-    DeleteDatabaseFile();
+
+    // Uncomment the following method for "local"/"dvelopment" testing.
+    //DeleteDatabaseFile();
 
     // Delete database files everytime when starting the application
-    void DeleteDatabaseFile()
-    {
-        var databaseFilesPath = Path.GetDirectoryName(webApplicationBuilder.Configuration.GetConnectionString("DefaultConnectionString"))?.ToLower().Replace("data source", "").Replace("=", "");
-        try
-        {
-            foreach (var file in Directory.GetFiles(databaseFilesPath))
-            {
-                File.Delete(file);
-            }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error deleting database file: {ex.Message}");
-        }
-    }
+    //void DeleteDatabaseFile()
+    //{
+    //    var databaseFilesPath = Path.GetDirectoryName(webApplicationBuilder.Configuration.GetConnectionString("DefaultConnectionString"))?.ToLower().Replace("data source", "").Replace("=", "");
+    //    try
+    //    {
+    //        foreach (var file in Directory.GetFiles(databaseFilesPath))
+    //        {
+    //            File.Delete(file);
+    //        }
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($"Error deleting database file: {ex.Message}");
+    //    }
+    //}
 }
 webApplication.UseHttpsRedirection();
 webApplication.UseCors("CorsPolicy");
