@@ -1,4 +1,6 @@
-﻿namespace ProductApi.Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace ProductApi.Domain.Entities
 {
     /// <summary>
     /// Represents brand entity.
@@ -14,5 +16,8 @@
         /// Gets or sets Name.
         /// </summary>
         public string Name { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public IEnumerable<Product> Products { get; set; }
     }
 }

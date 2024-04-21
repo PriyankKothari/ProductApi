@@ -22,7 +22,7 @@ namespace ProductApi.Domain.Repositories
         /// <param name="predicateExpression"><see cref="Expression{TDelegate}" />.</param>
         /// <param name="cancellationToken"><see cref="CancellationToken" />.</param>
         /// <returns><see cref="Product" />.</returns>
-        Task<Product?> GetAsync(Expression<Func<Product, bool>>? predicateExpression, CancellationToken cancellationToken);
+        Task<Product?> GetAsync(Expression<Func<Product, bool>> predicateExpression, CancellationToken cancellationToken);
 
         /// <summary>
         /// Creates a <see cref="Product" />.
