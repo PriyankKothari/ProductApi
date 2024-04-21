@@ -39,7 +39,7 @@ namespace ProductApi.Application.Services
             }
             catch (Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -55,11 +55,11 @@ namespace ProductApi.Application.Services
             try
             {
                 return this._mapper.Map<IEnumerable<ProductDto>>(
-                    await this._productRepository.ListAsync(pr => pr.Brand.Name.Equals(brandName, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false));
+                    await this._productRepository.ListAsync(pr => pr.BrandName.ToLower().Equals(brandName.ToLower()), cancellationToken).ConfigureAwait(false));
             }
             catch(Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -77,7 +77,7 @@ namespace ProductApi.Application.Services
             }
             catch (Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -93,11 +93,11 @@ namespace ProductApi.Application.Services
             try
             {
                 return this._mapper.Map<ProductDto>(
-                    await this._productRepository.GetAsync(pr => pr.Name.Equals(name, StringComparison.OrdinalIgnoreCase), cancellationToken).ConfigureAwait(false));
+                    await this._productRepository.GetAsync(pr => pr.Name.ToLower().Equals(name.ToLower()), cancellationToken).ConfigureAwait(false));
             }
             catch (Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -116,11 +116,14 @@ namespace ProductApi.Application.Services
             try
             {
                 return this._mapper.Map<ProductDto>(
-                    await this._productRepository.GetAsync(pr => pr.Name.Contains(name) && pr.Brand.Name.Contains(brandName), cancellationToken).ConfigureAwait(false));
+                    await this._productRepository.GetAsync(
+                        pr => pr.Name.ToLower().Contains(name.ToLower()) &&
+                        pr.BrandName.ToLower().Contains(brandName.ToLower()), cancellationToken)
+                    .ConfigureAwait(false));
             }
             catch (Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -138,7 +141,7 @@ namespace ProductApi.Application.Services
             }
             catch (Exception exception)
             {
-                this._logger?.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -156,7 +159,7 @@ namespace ProductApi.Application.Services
             }
             catch (Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -174,7 +177,7 @@ namespace ProductApi.Application.Services
             }
             catch(Exception exception)
             {
-                this._logger.LogError(exception.Message, exception);
+                this._logger.LogError(exception?.InnerException?.Message, exception);
                 throw;
             }
         }

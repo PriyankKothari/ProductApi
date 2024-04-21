@@ -35,7 +35,7 @@ namespace ProductApi.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                this._logger.LogCritical(exception.Message, exception);
+                this._logger.LogCritical(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -53,7 +53,7 @@ namespace ProductApi.Persistence.Repositories
             }
             catch (Exception exception)
             {
-                this._logger.LogCritical(exception.Message, exception);
+                this._logger.LogCritical(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -73,12 +73,12 @@ namespace ProductApi.Persistence.Repositories
             }
             catch (DbUpdateConcurrencyException concurrencyException)
             {
-                this._logger.LogCritical(concurrencyException.Message, concurrencyException);
+                this._logger.LogCritical(concurrencyException?.InnerException?.Message, concurrencyException);
                 throw;
             }
             catch(Exception exception)
             {
-                this._logger.LogCritical(exception.Message, exception);
+                this._logger.LogCritical(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -103,12 +103,12 @@ namespace ProductApi.Persistence.Repositories
             }
             catch (DbUpdateConcurrencyException concurrencyException)
             {
-                this._logger.LogCritical(concurrencyException.Message, concurrencyException);
+                this._logger.LogCritical(concurrencyException?.InnerException?.Message, concurrencyException);
                 throw;
             }
             catch (Exception exception)
             {
-                this._logger.LogCritical(exception.Message, exception);
+                this._logger.LogCritical(exception?.InnerException?.Message, exception);
                 throw;
             }
         }
@@ -133,7 +133,7 @@ namespace ProductApi.Persistence.Repositories
             }
             catch (DbUpdateConcurrencyException concurrencyException)
             {
-                this._logger.LogCritical(concurrencyException.Message, concurrencyException);
+                this._logger.LogCritical(concurrencyException?.InnerException?.Message, concurrencyException);
                 throw;
             }
             catch (Exception exception)

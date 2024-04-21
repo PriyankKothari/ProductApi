@@ -9,11 +9,6 @@ namespace ProductApi.Persistence.DatabaseContexts
     public sealed class DatabaseContext : DbContext
     {
         /// <summary>
-        /// Gets or sets Brands.
-        /// </summary>
-        public DbSet<Brand> Brands { get; set; }
-
-        /// <summary>
         /// Gets or sets Products.
         /// </summary>
         public DbSet <Product> Products { get; set; }
@@ -33,35 +28,17 @@ namespace ProductApi.Persistence.DatabaseContexts
             modelBuilder.Entity<Product>().ToTable("Product").HasKey(product => product.Id);
             modelBuilder.Entity<Product>().Property(product => product.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<Product>().Property(product => product.Name).IsRequired();
+            modelBuilder.Entity<Product>().Property(product => product.BrandName).IsRequired();
             modelBuilder.Entity<Product>().Property(product => product.Price).IsRequired();
 
-            // Brand
-            modelBuilder.Entity<Product>().ToTable("Brand").HasKey(product => product.Id);
-            modelBuilder.Entity<Product>().Property(product => product.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Product>().Property(product => product.Name).IsRequired();
-
-            // Brand to Product
-            modelBuilder.Entity<Brand>()
-                .HasMany(brand => brand.Products)
-                .WithOne(product => product.Brand)
-                .HasForeignKey(product => product.BrandId);
-
             // setting unique key index for Product.Name and Product.BrandId to avoid duplicate Products.
-            modelBuilder.Entity<Product>().HasIndex(product => new { product.Name, product.BrandId }).IsUnique(true);
+            modelBuilder.Entity<Product>().HasIndex(product => new { product.Name, product.BrandName }).IsUnique(true);
 
             base.OnModelCreating(modelBuilder);
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken)
         {
-            // set IsDeleted and DeletedDate when entity is EntityState.Deleted.
-            var deletedEntities = ChangeTracker.Entries().Where(entity => entity.State == EntityState.Deleted).ToList();
-            deletedEntities.ForEach(entity =>
-            {
-                entity.State = EntityState.Modified;
-                entity.Property("IsDeleted").CurrentValue = true;
-            });
-
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
     }
