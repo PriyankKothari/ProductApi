@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProductApi.Application.DTOs;
 using ProductApi.Application.Services;
 using ProductApi.WebApi.ViewModels;
+using Swashbuckle.AspNetCore.Annotations;
 using System.Net;
 
 namespace ProductApi.WebApi.Controllers
@@ -39,6 +40,7 @@ namespace ProductApi.WebApi.Controllers
         /// <returns><see cref="IActionResult" />.</returns>
         /// <response code = "200">Returns Ok</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Lists all the products.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpGet]
@@ -75,6 +77,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "200">Returns Ok</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Gets a product by Id.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -127,6 +130,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "200">Returns Ok</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Gets a product by Name.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -178,6 +182,7 @@ namespace ProductApi.WebApi.Controllers
         /// <returns><see cref="IActionResult" />.</returns>
         /// <response code = "200">Returns Ok</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Gets a product by Brand Name.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [HttpGet("brands/{brandName}")]
@@ -217,6 +222,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "200">Returns Ok</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Gets a product by Product Name and Brand Name.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]
@@ -271,6 +277,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "400">Returns BadRequest</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Creates a product.")]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -339,6 +346,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "400">Returns BadRequest</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Updates a product.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -414,6 +422,7 @@ namespace ProductApi.WebApi.Controllers
         /// <response code = "200">Returns Ok</response>
         /// <response code = "404">Returns NotFound</response>
         /// <response code = "500">Returns InternalServerError</response>
+        [SwaggerOperation(Summary = "Deletes a product.")]
         [ProducesResponseType(200)]
         [ProducesResponseType(404)]
         [ProducesResponseType(500)]

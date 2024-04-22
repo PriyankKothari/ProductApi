@@ -44,7 +44,7 @@ webApplicationBuilder.Services.AddFluentValidationAutoValidation();
 
 // API Explorer
 webApplicationBuilder.Services.AddEndpointsApiExplorer();
-webApplicationBuilder.Services.AddSwaggerGen();
+webApplicationBuilder.Services.AddSwaggerGen(options => options.EnableAnnotations());
 
 // API Versioning
 webApplicationBuilder.Services.AddApiVersioning(options =>
