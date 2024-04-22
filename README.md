@@ -26,7 +26,7 @@ git clone https://github.com/PriyankKothari/ProductApi.git
       - For example, https://localhost:7290/v1/products/{id:int} doesn't have 'id' parameter mandetory. But if not provided, the endpoint to 'List all products' will get executed. Hence it is 'Required'.
   
 ## Imrpovements / TODO
-- Detailed Swagger Documentation
+- Enhanced Swagger Documentation to include return types, parameter types and required/non-required, description of parameters, etc.
 - Extensive logging such as log a method exeuction (as soon as control enters a method)
 - Detailed logging such as time taken for an execution of method.
 - Unit tests to cover scenarios such as:
